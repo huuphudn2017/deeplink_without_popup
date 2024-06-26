@@ -65,7 +65,7 @@
                             if (!didHide) {
                                 options.onFallback();
                             }
-                        }, 1000);
+                        }, timeout);
                     }
                 }
 
@@ -91,7 +91,7 @@
             this.destroy = bindEvents.bind(null, 'remove');
             this.openURL = function (url) {
                 // it can take a while for the dialog to appear
-                var dialogTimeout = 500;
+                var dialogTimeout = timeout;
 
                 setTimeout(function () {
                     if (hasFocus && options.onIgnored) {
@@ -103,14 +103,35 @@
             };
         }
 
-        /* usage */
+        function getMobileOperatingSystem() {
+            var userAgent = navigator.userAgent || navigator.vendor || window.opera;
 
-        var url = deepLink;
-        var badURL = 'lksadjgajsdhfaskd://slkdfs';
+            // Kiểm tra Android
+            if (/android/i.test(userAgent)) {
+                return "Android";
+            }
+
+            // Kiểm tra iOS
+            if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                return "iOS";
+            }
+
+            return "unknown";
+        }
+
+        var os = getMobileOperatingSystem();
 
         var linker = new DeepLinker({
             onIgnored: function () {
                 console.log('browser failed to respond to the deep link');
+                if (os === "Android") {
+                    window.location = androidStoreLink;
+                } else if (os === "iOS") {
+                    window.location = iosStoreLink;
+                } else {
+                    // Điều hướng mặc định hoặc thông báo lỗi
+                    document.body.innerHTML = "<h1>Unsupported device</h1>";
+                }
             },
             onFallback: function () {
                 console.log('dialog hidden or user returned to tab');
@@ -120,7 +141,7 @@
             },
         });
 
-        linker.openURL(url);
+        linker.openURL(deepLink);
     </script>
 </body>
 
