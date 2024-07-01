@@ -16,8 +16,12 @@
         var timeout = 500;
 
         // var uuid = new DeviceUUID().get();
-        var fingerprint = await Fingerprint.getHash();
-        console.log(fingerprint);
+        async function checkHash() {
+            var fingerprint = await Fingerprint.getHash();
+            console.log(fingerprint);
+        }
+
+        checkHash();
 
         const urlParams = new URLSearchParams(window.location.search);
 
