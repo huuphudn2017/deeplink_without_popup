@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://raw.githubusercontent.com/biggora/device-uuid/master/lib/device-uuid.min.js"></script>
     <script src="https://github.com/biggora/device-uuid/blob/master/lib/device-uuid.js" type="text/javascript"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/fingerprintjs2/2.1.0/fingerprint2.min.js"></script>
     <title>Deep Link Handler</title>
 </head>
 
@@ -14,8 +15,9 @@
     <script>
         var timeout = 500;
 
-        var uuid = new DeviceUUID().get();
-        console.log(uuid);
+        // var uuid = new DeviceUUID().get();
+        var fingerprint = await Fingerprint.getHash();
+        console.log(fingerprint);
 
         const urlParams = new URLSearchParams(window.location.search);
 
