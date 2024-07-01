@@ -4,105 +4,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://raw.githubusercontent.com/biggora/device-uuid/master/lib/device-uuid.min.js"></script>
     <title>Deep Link Handler</title>
 </head>
 
 <body>
     <h1>Redirecting...</h1>
     <script>
-        // Thời gian chờ trước khi điều hướng (500ms giây)
-        var timeout = 1000;
+        var timeout = 500;
 
-        // Lấy URL hiện tại
+        var uuid = new DeviceUUID().get();
+        console.log(uuid);
+
         const urlParams = new URLSearchParams(window.location.search);
 
         // Lấy giá trị của các tham số
         const refCode = urlParams.get('refcode');
 
-        // Deep Link của ứng dụng (thay thế bằng Deep Link thực tế của bạn)
-        var deepLink = `insurtechdev://app/refcode/${refCode}`;
+        var deepLink = `insurtechdev://app?refcode=${refCode}`;
 
         // URL của cửa hàng ứng dụng
-        var androidStoreLink = `intent://play.google.com/store/apps/details?id=com.google.android.gm&referrer=param%3D${refCode}#Intent;scheme=https;package=com.android.vending;end`;
+        var androidStoreLink = `intent://play.google.com/store/apps/details?id=com.google.android.gm&referrer=utm_refcode%3D${refCode}#Intent;scheme=https;package=com.android.vending;end`;
         var iosStoreLink = `https://apps.apple.com/app/id422689480?param=${refCode}`;
 
-        function DeepLinker(options) {
-            if (!options) {
-                throw new Error('no options')
-            }
-
-            var hasFocus = true;
-            var didHide = false;
-
-            // window is blurred when dialogs are shown
-            function onBlur() {
-                hasFocus = false;
-            };
-
-            // document is hidden when native app is shown or browser is backgrounded
-            function onVisibilityChange(e) {
-                if (e.target.visibilityState === 'hidden') {
-                    didHide = true;
-                }
-            };
-
-            // window is focused when dialogs are hidden, or browser comes into view
-            function onFocus() {
-                if (didHide) {
-                    if (options.onReturn) {
-                        options.onReturn();
-                    }
-
-                    didHide = false; // reset
-                } else {
-                    // ignore duplicate focus event when returning from native app on
-                    // iOS Safari 13.3+
-                    if (!hasFocus && options.onFallback) {
-                        // wait for app switch transition to fully complete - only then is
-                        // 'visibilitychange' fired
-                        setTimeout(function () {
-                            // if browser was not hidden, the deep link failed
-                            if (!didHide) {
-                                options.onFallback();
-                            }
-                        }, timeout);
-                    }
-                }
-
-                hasFocus = true;
-            };
-
-            // add/remove event listeners
-            // `mode` can be "add" or "remove"
-            function bindEvents(mode) {
-                [
-                    [window, 'blur', onBlur],
-                    [document, 'visibilitychange', onVisibilityChange],
-                    [window, 'focus', onFocus],
-                ].forEach(function (conf) {
-                    conf[0][mode + 'EventListener'](conf[1], conf[2]);
-                });
-            }
-
-            // add event listeners
-            bindEvents('add');
-
-            // expose public API
-            this.destroy = bindEvents.bind(null, 'remove');
-            this.openURL = function (url) {
-                // it can take a while for the dialog to appear
-                var dialogTimeout = 500;
-
-                setTimeout(function () {
-                    if (hasFocus && options.onIgnored) {
-                        options.onIgnored();
-                    }
-                }, dialogTimeout);
-
-                window.location = url;
-            };
-        }
-
+        // Hàm kiểm tra hệ điều hành
         function getMobileOperatingSystem() {
             var userAgent = navigator.userAgent || navigator.vendor || window.opera;
 
@@ -111,7 +36,7 @@
             }
 
             if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-                return "iOS";
+                return "ios";
             }
 
             return "unknown";
@@ -119,33 +44,22 @@
 
         var os = getMobileOperatingSystem();
 
-        var linker = new DeepLinker({
-            onIgnored: function () {
-                console.log('browser failed to respond to the deep link');
-                if (os === "Android") {
-                    window.location = androidStoreLink;
-                } else if (os === "iOS") {
-                    window.location = iosStoreLink;
-                } else {
-                    document.body.innerHTML = "<h1>Unsupported device</h1>";
-                }
-            },
-            onFallback: function () {
-                console.log('dialog hidden or user returned to tab');
-                if (os === "Android") {
-                    window.location = androidStoreLink;
-                } else if (os === "iOS") {
-                    window.location = iosStoreLink;
-                } else {
-                    document.body.innerHTML = "<h1>Unsupported device</h1>";
-                }
-            },
-            onReturn: function () {
-                console.log('user returned to the page from the native app');
-            },
-        });
+        if (os === "Android") {
+            window.location = deepLink;
+        } else {
+            //window.location = iosStoreLink;
+        }
 
-        linker.openURL(deepLink);
+        setTimeout(function () {
+            if (os === "Android") {
+                window.location = androidStoreLink;
+            } else if (os === "ios") {
+                window.location = iosStoreLink;
+            } else {
+                document.body.innerHTML = "<h1>Unsupported device</h1>";
+            }
+        }, timeout);
+
     </script>
 </body>
 
