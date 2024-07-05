@@ -17,13 +17,11 @@
         // Lấy giá trị của các tham số
         const refCode = urlParams.get('refcode');
 
-        var deepLink = `insurtechdev://app?refcode=${refCode}`;
-
-        document.cookie = `refCode=${refCode}`;
+        var deepLink = `insurtechdev://app?refcode=${refCode}`;        
 
         // URL của cửa hàng ứng dụng
         var androidStoreLink = `intent://play.google.com/store/apps/details?id=com.google.android.gm&referrer=utm_refcode%3D${refCode}#Intent;scheme=https;package=com.android.vending;end`;
-        var iosStoreLink = `https://apps.apple.com/app/id422689480?param=${refCode}`;
+        var iosStoreLink = `https://apps.apple.com/app/id422689480`;
 
         // Hàm kiểm tra hệ điều hành
         function getMobileOperatingSystem() {
@@ -42,21 +40,23 @@
 
         var os = getMobileOperatingSystem();
 
-        // if (os === "Android") {
-        //     window.location = deepLink;
-        // } else {
-        //     window.location = iosStoreLink;
-        // }
+        if (os === "Android") {
+            window.location = deepLink;
+        } else {
+            window.location = iosStoreLink;
+        }
 
-        // setTimeout(function () {
-        //     if (os === "Android") {
-        //         window.location = androidStoreLink;
-        //     } else if (os === "ios") {
-        //         window.location = iosStoreLink;
-        //     } else {
-        //         document.body.innerHTML = "<h1>Unsupported device</h1>";
-        //     }
-        // }, timeout);
+        navigator.clipboard.writeText(refCode);
+
+        setTimeout(function () {
+            if (os === "Android") {
+                window.location = androidStoreLink;
+            } else if (os === "ios") {
+                window.location = iosStoreLink;
+            } else {
+                document.body.innerHTML = "<h1>Unsupported device</h1>";
+            }
+        }, timeout);
 
     </script>
 </body>
