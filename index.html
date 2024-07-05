@@ -41,18 +41,20 @@
 
         var os = getMobileOperatingSystem();
 
+        function myFunction() {
+            clipboard.writeText(refCode).then(function () {
+                // if (os === "Android") {
+                //     window.location = deepLink;
+                // } else {
+                //     window.location = iosStoreLink;
+                // }
+                alert(refCode);
+            }, function (err) {
+                alert(err.toString());
+            });
+        }
 
-
-        clipboard.writeText(refCode).then(function () {
-            // if (os === "Android") {
-            //     window.location = deepLink;
-            // } else {
-            //     window.location = iosStoreLink;
-            // }
-            alert(refCode);
-        }, function (err) {
-            alert(err.toString());
-        });
+        myFunction()
 
 
         // setTimeout(function () {
