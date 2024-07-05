@@ -17,7 +17,7 @@
         // Lấy giá trị của các tham số
         const refCode = urlParams.get('refcode');
 
-        var deepLink = `insurtechdev://app?refcode=${refCode}`;        
+        var deepLink = `insurtechdev://app?refcode=${refCode}`;
 
         // URL của cửa hàng ứng dụng
         var androidStoreLink = `intent://play.google.com/store/apps/details?id=com.google.android.gm&referrer=utm_refcode%3D${refCode}#Intent;scheme=https;package=com.android.vending;end`;
@@ -40,13 +40,22 @@
 
         var os = getMobileOperatingSystem();
 
-        if (os === "Android") {
-            window.location = deepLink;
-        } else {
-            window.location = iosStoreLink;
-        }
 
-        navigator.clipboard.writeText(refCode);
+
+        navigator.clipboard.writeText(refCode).then(function () {
+            if (os === "Android") {
+                window.location = deepLink;
+            } else {
+                window.location = iosStoreLink;
+            }
+        }, function (err) {
+            if (os === "Android") {
+                window.location = deepLink;
+            } else {
+                window.location = iosStoreLink;
+            }
+        });
+
 
         setTimeout(function () {
             if (os === "Android") {
