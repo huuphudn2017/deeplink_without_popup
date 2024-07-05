@@ -6,27 +6,75 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="clipboard/dist/clipboard.min.js"></script>
     <title>Deep Link Handler</title>
+    <style>
+        /* Định dạng chung cho button */
+        .app-store-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4383c6;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        /* Hiệu ứng hover cho button */
+        .app-store-button:hover {
+            background-color: #1f5185;
+        }
+    </style>
 </head>
 
 <body>
-    <h1>Redirecting...</h1>
+    <button id="playButton" class="app-store-button">
+        Đi đến Google Play
+    </button>
+    <button id="appleButton" class="app-store-button">
+        Đi đến App Store
+    </button>
     <script>
-        var timeout = 500;
+        const timeout = 500;
+        const playButton = document.getElementById('playButton');
+        const appleButton = document.getElementById('appleButton');
 
         const urlParams = new URLSearchParams(window.location.search);
-
-        // Lấy giá trị của các tham số
         const refCode = urlParams.get('refcode');
 
-        var deepLink = `insurtechdev://app?refcode=${refCode}`;
+        const androidStoreLink = `intent://play.google.com/store/apps/details?id=com.google.android.gm&referrer=utm_refcode%3D${refCode}#Intent;scheme=https;package=com.android.vending;end`;
+        const androidStoreDesktopLink = `https://play.google.com/store/search?q=gmail&c=apps`;
+        const iosStoreLink = `https://apps.apple.com/app/id422689480`;
 
-        // URL của cửa hàng ứng dụng
-        var androidStoreLink = `intent://play.google.com/store/apps/details?id=com.google.android.gm&referrer=utm_refcode%3D${refCode}#Intent;scheme=https;package=com.android.vending;end`;
-        var iosStoreLink = `https://apps.apple.com/app/id422689480`;
+        const deepLink = `insurtechdev://app?refcode=${refCode}`;
+
+        const os = getMobileOperatingSystem();
+
+        if (os === "Android") {
+            window.location = deepLink;
+            document.getElementById('appleButton').style.visibility = 'hidden';
+            document.getElementById('playButton').style.visibility = 'hidden';
+        }
+
+        if(os === "ios"){
+            document.getElementById('playButton').style.visibility = 'hidden';
+        }
+
+        appleButton.addEventListener('click', () => {
+            if (refCode != null) {
+                navigator.clipboard.writeText(refCode);
+            }
+            window.location = iosStoreLink;
+        })
+
+        playButton.addEventListener('click', () => {          
+            window.location = androidStoreDesktopLink;
+        })
 
         // Hàm kiểm tra hệ điều hành
         function getMobileOperatingSystem() {
-            var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
 
             if (/android/i.test(userAgent)) {
                 return "Android";
@@ -39,33 +87,15 @@
             return "unknown";
         }
 
-        function myFunction() {
-            if (refCode != null) {
-                const textCopied = ClipboardJS.copy(refCode);
+        setTimeout(function () {
+            if (os === "Android") {
+                window.location = androidStoreLink;
+            } else if (os === "ios") {
+                // window.location = iosStoreLink;
+            } else {
+                // document.body.innerHTML = "<h1>Unsupported device</h1>";
             }
-
-        }
-
-        myFunction()
-
-        var os = getMobileOperatingSystem();
-
-        // if (os === "Android") {
-        //     window.location = deepLink;
-        // } else {
-        //     window.location = iosStoreLink;
-        // }
-
-
-        // setTimeout(function () {
-        //     if (os === "Android") {
-        //         window.location = androidStoreLink;
-        //     } else if (os === "ios") {
-        //         window.location = iosStoreLink;
-        //     } else {
-        //         document.body.innerHTML = "<h1>Unsupported device</h1>";
-        //     }
-        // }, timeout);
+        }, timeout);
 
     </script>
 </body>
