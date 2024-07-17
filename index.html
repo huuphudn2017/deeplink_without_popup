@@ -38,19 +38,17 @@
         const androidStoreLink = `intent://play.google.com/store/apps/details?id=com.sw.katinatkafe`;
         const iosStoreLink = `https://apps.apple.com/app/id6462999997`;
 
-        const deepLinkIOS = `ktn://`;
-        // const deepLinkAndroid = 'ktncore.softworld.dev://';
-        const deepLinkAndroid = 'https://apigw.katinat.vn';
+        const deepLink = `ktn://`;
 
         const os = getMobileOperatingSystem();
 
         if (os === "Android") {
-            window.location = deepLinkAndroid;
+            window.location = deepLink;
         }
 
         if (os === "IOS") {
             document.getElementById('appleButton').style.visibility = 'visible';
-            window.location = deepLinkIOS;
+            window.location = deepLink;
         }
 
         appleButton.addEventListener('click', () => {
