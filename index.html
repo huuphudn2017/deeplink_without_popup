@@ -5,71 +5,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Directional</title>
-    <style>
-        .app-store-button {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #4383c6;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            text-decoration: none;
-            font-size: 16px;
-            font-weight: bold;
-        }
-
-        .app-store-button:hover {
-            background-color: #1f5185;
-        }
-    </style>
 </head>
 
 <body>
-    <button id="playButton" class="app-store-button">
-        Đi đến Google Play
-    </button>
-    <button id="appleButton" class="app-store-button">
-        Đi đến App Store
-    </button>
     <script>
         const timeout = 500;
-        const playButton = document.getElementById('playButton');
-        const appleButton = document.getElementById('appleButton');
 
-        const urlParams = new URLSearchParams(window.location.search);
-        const refCode = urlParams.get('refcode');
+        const androidStoreLink = `intent://play.google.com/store/apps/details?id=com.sw.katinatkafe`;
+        const iosStoreLink = `https://apps.apple.com/app/id6462999997`;
 
-        const androidStoreLink = `intent://play.google.com/store/apps/details?id=com.google.android.gm&referrer=utm_refcode%3D${refCode}#Intent;scheme=https;package=com.android.vending;end`;
-        const androidStoreDesktopLink = `https://play.google.com/store/search?q=gmail&c=apps`;
-        const iosStoreLink = `https://apps.apple.com/app/id422689480`;
-
-        const deepLink = `insurtechdev://app?refcode=${refCode}`;
+        const deepLinkIOS = `ktn://`;
+        const deepLinkAndroid = 'ktncore.softworld.dev://';
 
         const os = getMobileOperatingSystem();
 
         if (os === "Android") {
-            window.location = deepLink;
-            document.getElementById('appleButton').style.visibility = 'hidden';
-            document.getElementById('playButton').style.visibility = 'hidden';
+            window.location = deepLinkAndroid;
         }
 
-        if(os === "ios"){
-            document.getElementById('playButton').style.visibility = 'hidden';
+        if (os === "IOS") {
+            window.location = deepLinkIOS;
         }
 
-        appleButton.addEventListener('click', () => {
-            if (refCode != null) {
-                navigator.clipboard.writeText(refCode);
-            }
-            window.location = iosStoreLink;
-        })
-
-        playButton.addEventListener('click', () => {          
-            window.location = androidStoreDesktopLink;
-        })
-
-        // Hàm kiểm tra hệ điều hành
         function getMobileOperatingSystem() {
             const userAgent = navigator.userAgent || navigator.vendor || window.opera;
 
@@ -78,7 +35,7 @@
             }
 
             if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-                return "ios";
+                return "IOS";
             }
 
             return "unknown";
@@ -88,9 +45,9 @@
             if (os === "Android") {
                 window.location = androidStoreLink;
             } else if (os === "ios") {
-                // window.location = iosStoreLink;
+                window.location = iosStoreLink;
             } else {
-                // document.body.innerHTML = "<h1>Unsupported device</h1>";
+                document.body.innerHTML = "<h1>Unsupported device</h1>";
             }
         }, timeout);
 
