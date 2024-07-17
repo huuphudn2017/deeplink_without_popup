@@ -5,11 +5,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Directional</title>
+    <style>
+        .app-store-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4383c6;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .app-store-button:hover {
+            background-color: #1f5185;
+        }
+    </style>
 </head>
+
+<button id="appleButton" class="app-store-button" style="visibility: hidden">
+    Đi đến App Store
+</button>
 
 <body>
     <script>
         const timeout = 500;
+
+        const appleButton = document.getElementById('appleButton');
 
         const androidStoreLink = `intent://play.google.com/store/apps/details?id=com.sw.katinatkafe`;
         const iosStoreLink = `https://apps.apple.com/app/id6462999997`;
@@ -24,8 +48,15 @@
         }
 
         if (os === "IOS") {
+            document.getElementById('appleButton').style.visibility = 'visible';
             window.location = deepLinkIOS;
         }
+
+        appleButton.addEventListener('click', () => {
+            if (os === "IOS") {
+                window.location = iosStoreLink;
+            }
+        })
 
         function getMobileOperatingSystem() {
             const userAgent = navigator.userAgent || navigator.vendor || window.opera;
@@ -44,10 +75,10 @@
         setTimeout(function () {
             if (os === "Android") {
                 window.location = androidStoreLink;
-            } else if (os === "ios") {
-                window.location = iosStoreLink;
+            } else if (os === "IOS") {
+                // window.location = iosStoreLink;
             } else {
-                document.body.innerHTML = "<h1>Unsupported device</h1>";
+                // document.body.innerHTML = "<h1>Unsupported device</h1>";
             }
         }, timeout);
 
