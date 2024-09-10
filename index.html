@@ -25,22 +25,23 @@
     </style>
 </head>
 
-<button id="appleButton" class="app-store-button" style="visibility: hidden">
-    Đi đến App Store
-</button>
-
 <body>
+    <button id="playButton" class="app-store-button">
+        Đi đến Google Play
+    </button>
+    <button id="appleButton" class="app-store-button">
+        Đi đến App Store
+    </button>
     <script>
         const timeout = 500;
-
-        const urlParams = new URLSearchParams(window.location.search);
-
-         // Lấy giá trị của các tham số
-        const groupCode = urlParams.get('groupcode');
-
+        const playButton = document.getElementById('playButton');
         const appleButton = document.getElementById('appleButton');
 
-        const androidStoreLink = `intent://play.google.com/store/apps/details?id=com.sw.katinatkafe#Intent;scheme=https;package=com.android.vending;end`;
+        const urlParams = new URLSearchParams(window.location.search);
+        const groupCode = urlParams.get('groupcode');
+
+        const androidStoreLink = `intent://play.google.com/store/apps/details?id=com.sw.katinatkafe&referrer=utm_groupcode%3D${groupCode}#Intent;scheme=https;package=com.android.vending;end`;
+        const androidStoreDesktopLink = `https://play.google.com/store/search?q=katinat&c=apps`;
         const iosStoreLink = `https://apps.apple.com/app/id6462999997`;
 
         const deepLink = `katinatdev://app?groupcode=${groupCode}`;
@@ -49,19 +50,26 @@
 
         if (os === "Android") {
             window.location = deepLink;
+            document.getElementById('appleButton').style.visibility = 'hidden';
+            document.getElementById('playButton').style.visibility = 'hidden';
         }
 
-        if (os === "IOS") {
-            document.getElementById('appleButton').style.visibility = 'visible';
-            window.location = deepLink;
+        if(os === "ios"){
+            document.getElementById('playButton').style.visibility = 'hidden';
         }
 
         appleButton.addEventListener('click', () => {
-            if (os === "IOS") {
-                window.location = iosStoreLink;
+            if (groupCode != null) {
+                navigator.clipboard.writeText(groupCode);
             }
+            window.location = iosStoreLink;
         })
 
+        playButton.addEventListener('click', () => {          
+            window.location = androidStoreDesktopLink;
+        })
+
+        // Hàm kiểm tra hệ điều hành
         function getMobileOperatingSystem() {
             const userAgent = navigator.userAgent || navigator.vendor || window.opera;
 
@@ -70,7 +78,7 @@
             }
 
             if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-                return "IOS";
+                return "ios";
             }
 
             return "unknown";
@@ -79,7 +87,7 @@
         setTimeout(function () {
             if (os === "Android") {
                 window.location = androidStoreLink;
-            } else if (os === "IOS") {
+            } else if (os === "ios") {
                 // window.location = iosStoreLink;
             } else {
                 // document.body.innerHTML = "<h1>Unsupported device</h1>";
