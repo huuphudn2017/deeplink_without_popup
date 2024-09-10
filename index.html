@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.0.0/qrcode.min.js"></script>
     <title>Directional</title>
     <style>
         .app-store-button {
@@ -32,6 +33,7 @@
     <button id="appleButton" class="app-store-button">
         Đi đến App Store
     </button>
+    <div id="qrcode"></div>
     <script>
         const timeout = 500;
         const playButton = document.getElementById('playButton');
@@ -48,13 +50,19 @@
 
         const os = getMobileOperatingSystem();
 
+        new QRCode(document.getElementById("qrcode"), {
+            text: deepLink,
+            width: 256,
+            height: 256
+        });
+
         if (os === "Android") {
             window.location = deepLink;
             document.getElementById('appleButton').style.visibility = 'hidden';
             document.getElementById('playButton').style.visibility = 'hidden';
         }
 
-        if(os === "ios"){
+        if (os === "ios") {
             document.getElementById('playButton').style.visibility = 'hidden';
         }
 
@@ -65,7 +73,7 @@
             window.location = iosStoreLink;
         })
 
-        playButton.addEventListener('click', () => {          
+        playButton.addEventListener('click', () => {
             window.location = androidStoreDesktopLink;
         })
 
