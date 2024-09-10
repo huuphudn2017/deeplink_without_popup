@@ -33,12 +33,17 @@
     <script>
         const timeout = 500;
 
+        const urlParams = new URLSearchParams(window.location.search);
+
+         // Lấy giá trị của các tham số
+        const groupCode = urlParams.get('groupcode');
+
         const appleButton = document.getElementById('appleButton');
 
         const androidStoreLink = `intent://play.google.com/store/apps/details?id=com.sw.katinatkafe#Intent;scheme=https;package=com.android.vending;end`;
         const iosStoreLink = `https://apps.apple.com/app/id6462999997`;
 
-        const deepLink = `ktn://`;
+        const deepLink = `katinatdev://app/groupcode/${groupCode}`;
 
         const os = getMobileOperatingSystem();
 
