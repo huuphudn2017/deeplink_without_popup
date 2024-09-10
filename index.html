@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.0.0/qrcode.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <title>Directional</title>
     <style>
         .app-store-button {
@@ -23,6 +23,33 @@
         .app-store-button:hover {
             background-color: #1f5185;
         }
+
+        /* Căn chỉnh overlay bao phủ toàn bộ màn hình */
+        .overlay {
+            display: none;
+            /* Ẩn ban đầu */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            /* Màu nền mờ */
+            z-index: 1000;
+        }
+
+        /* Căn giữa dialog */
+        .dialog {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1001;
+        }
     </style>
 </head>
 
@@ -33,11 +60,23 @@
     <button id="appleButton" class="app-store-button">
         Đi đến App Store
     </button>
-    <div id="qrcode"></div>
+    <div id="dialogOverlay" class="overlay">
+        <div id="dialog" class="dialog">
+            <h2>Dialog</h2>
+            <p>Đây là nội dung của dialog</p>
+            <img id='barcode' src="https://api.qrserver.com/v1/create-qr-code/?data=HelloWorld&amp;size=150x150" alt=""
+                title="HELLO" width="150" height="150" />
+            <button id="closeDialogBtn">Đóng</button>
+        </div>
+    </div>
     <script>
         const timeout = 500;
         const playButton = document.getElementById('playButton');
         const appleButton = document.getElementById('appleButton');
+
+        // Lấy phần tử của nút mở và đóng dialog
+        const closeDialogBtn = document.getElementById('closeDialogBtn');
+        const dialogOverlay = document.getElementById('dialogOverlay');
 
         const urlParams = new URLSearchParams(window.location.search);
         const groupCode = urlParams.get('groupcode');
@@ -50,11 +89,14 @@
 
         const os = getMobileOperatingSystem();
 
-        new QRCode(document.getElementById("qrcode"), {
-            text: deepLink,
-            width: 256,
-            height: 256
-        });
+        function generateBarCode() {
+            var url = 'https://api.qrserver.com/v1/create-qr-code/?data=' + window.location.href + '&amp;size=150x150';
+            $('#barcode').attr('src', url);
+        }
+
+        generateBarCode();
+
+        dialogOverlay.style.display = 'block';
 
         if (os === "Android") {
             window.location = deepLink;
@@ -75,7 +117,18 @@
 
         playButton.addEventListener('click', () => {
             window.location = androidStoreDesktopLink;
-        })
+        });
+
+        // Sự kiện khi nhấn đóng dialog
+        closeDialogBtn.addEventListener('click', function () {
+            dialogOverlay.style.display = 'none';
+        });
+        // Đóng dialog khi nhấn ra ngoài khu vực dialog
+        dialogOverlay.addEventListener('click', function (event) {
+            if (event.target === dialogOverlay) {
+                dialogOverlay.style.display = 'none';
+            }
+        });
 
         // Hàm kiểm tra hệ điều hành
         function getMobileOperatingSystem() {
