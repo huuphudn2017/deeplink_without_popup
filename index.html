@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <title>Directional</title>
     <style>
         .app-store-button {
@@ -49,6 +49,34 @@
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             z-index: 1001;
+            text-align: center;
+        }
+
+        .button {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 12.5px 80px;
+            border: 0;
+            border-radius: 100px;
+            background-color: #114358;
+            color: #ffffff;
+            font-weight: Bold;
+            transition: all 0.5s;
+            -webkit-transition: all 0.5s;
+        }
+
+        .button:hover {
+            background-color: #1c6685;
+            box-shadow: 0 0 20px #6fc5ff50;
+            transform: scale(1.1);
+        }
+
+        .button:active {
+            background-color: #114358;
+            transition: all 0.25s;
+            -webkit-transition: all 0.25s;
+            box-shadow: none;
+            transform: scale(0.98);
         }
     </style>
 </head>
@@ -62,11 +90,12 @@
     </button>
     <div id="dialogOverlay" class="overlay">
         <div id="dialog" class="dialog">
-            <h2>Dialog</h2>
-            <p>Đây là nội dung của dialog</p>
+            <h2>Quét bằng điện thoại của bạn để tham gia một đơn hàng nhóm</h2>
+            <p>Đơn hàng theo nhóm chỉ có trên ứng dụng. Quét mã QR để tham gia!</p>
             <img id='barcode' src="https://api.qrserver.com/v1/create-qr-code/?data=HelloWorld&amp;size=150x150" alt=""
-                title="HELLO" width="150" height="150" />
-            <button id="closeDialogBtn">Đóng</button>
+                title="barcode" width="150" height="150" />
+            <br>
+            <button class="button" id="closeDialogBtn">Đóng</button>
         </div>
     </div>
     <script>
@@ -85,7 +114,7 @@
         const androidStoreDesktopLink = `https://play.google.com/store/search?q=katinat&c=apps`;
         const iosStoreLink = `https://apps.apple.com/app/id6462999997`;
 
-        const deepLink = `katinatdev://app?groupcode=${groupCode}`;
+        const deepLink = `katinatdev://app?groupcode=${groupCode}&storeid=1`;
 
         const os = getMobileOperatingSystem();
 
@@ -96,8 +125,6 @@
 
         generateBarCode();
 
-        dialogOverlay.style.display = 'block';
-
         if (os === "Android") {
             window.location = deepLink;
             document.getElementById('appleButton').style.visibility = 'hidden';
@@ -106,6 +133,12 @@
 
         if (os === "ios") {
             document.getElementById('playButton').style.visibility = 'hidden';
+        }
+
+        if (os !== "ios" && os !== "Android") {
+            document.getElementById('appleButton').style.visibility = 'hidden';
+            document.getElementById('playButton').style.visibility = 'hidden';
+            dialogOverlay.style.display = 'block';
         }
 
         appleButton.addEventListener('click', () => {
