@@ -4,9 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <title>Directional</title>
+    <link rel="shortcut icon" type="image/x-icon" href="logo_app.png" />
+    <script type="text/javascript" src="qrcode.min.js"></script>
+    <title>KATINAT Coffee & Tea House</title>
     <style>
+        @font-face {
+            font-family: katinat;
+            src: url('Katinat-SanSerif.otf');
+        }
+
+        h2,
+        p {
+            font-family: katinat
+        }
+
         .app-store-button {
             display: inline-block;
             padding: 10px 20px;
@@ -18,6 +29,10 @@
             text-decoration: none;
             font-size: 16px;
             font-weight: bold;
+        }
+
+        .qrCodeView {
+            display: inline-block;
         }
 
         .app-store-button:hover {
@@ -92,8 +107,7 @@
         <div id="dialog" class="dialog">
             <h2>Quét bằng điện thoại của bạn để tham gia một đơn hàng nhóm</h2>
             <p>Đơn hàng theo nhóm chỉ có trên ứng dụng. Quét mã QR để tham gia!</p>
-            <img id='barcode' src="https://api.qrserver.com/v1/create-qr-code/?data=HelloWorld&amp;size=150x150" alt=""
-                title="barcode" width="150" height="150" />
+            <div class="qrCodeView" id="qrCodeView"></div>
             <br>
             <button class="button" id="closeDialogBtn">Đóng</button>
         </div>
@@ -114,16 +128,18 @@
         const androidStoreDesktopLink = `https://play.google.com/store/search?q=katinat&c=apps`;
         const iosStoreLink = `https://apps.apple.com/app/id6462999997`;
 
-        const deepLink = `katinatdev://app?groupcode=${groupCode}&storeid=1`;
+        const deepLink = `katinatdev://app?groupcode=${groupCode}`;
 
         const os = getMobileOperatingSystem();
 
-        function generateBarCode() {
-            var url = 'https://api.qrserver.com/v1/create-qr-code/?data=' + window.location.href + '&amp;size=150x150';
-            $('#barcode').attr('src', url);
-        }
-
-        generateBarCode();
+        var qrcode = new QRCode("qrCodeView", {
+            text: window.location.href,
+            width: 200,
+            height: 200,
+            colorDark: "#000000",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.H
+        });
 
         if (os === "Android") {
             window.location = deepLink;
@@ -155,12 +171,14 @@
         // Sự kiện khi nhấn đóng dialog
         closeDialogBtn.addEventListener('click', function () {
             dialogOverlay.style.display = 'none';
+            window.location = "https://katinat.vn/"
         });
         // Đóng dialog khi nhấn ra ngoài khu vực dialog
         dialogOverlay.addEventListener('click', function (event) {
             if (event.target === dialogOverlay) {
                 dialogOverlay.style.display = 'none';
             }
+            window.location = "https://katinat.vn/"
         });
 
         // Hàm kiểm tra hệ điều hành
