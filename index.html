@@ -4,18 +4,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" type="image/x-icon" href="logo_app.png" />
-    <script type="text/javascript" src="qrcode.min.js"></script>
+    <link rel="shortcut icon" type="image/x-icon" href="assets/images/logo_app.png" />
+    <script type="text/javascript" src="lib/qrcode.min.js"></script>
     <title>KATINAT Coffee & Tea House</title>
     <style>
         @font-face {
             font-family: katinat;
-            src: url('Katinat-SanSerif.otf');
+            src: url('assets/fonts/Katinat-SanSerif.otf');
         }
 
-        h2,
-        p {
-            font-family: katinat
+        @font-face {
+            font-family: katinatBody;
+            src: url('assets/fonts/Barlow-Medium.ttf');
+        }
+
+        .title {
+            font-family: katinat;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .description {
+            font-family: katinatBody;
+            font-size: 16px;
+            margin-bottom: 50px;
         }
 
         .app-store-button {
@@ -69,8 +81,8 @@
 
         .button {
             display: inline-block;
-            margin-top: 10px;
-            padding: 12.5px 80px;
+            margin-top: 40px;
+            padding: 12.5px 150px;
             border: 0;
             border-radius: 100px;
             background-color: #114358;
@@ -78,6 +90,8 @@
             font-weight: Bold;
             transition: all 0.5s;
             -webkit-transition: all 0.5s;
+            font-family: katinat;
+            font-size: 20px;
         }
 
         .button:hover {
@@ -105,8 +119,8 @@
     </button>
     <div id="dialogOverlay" class="overlay">
         <div id="dialog" class="dialog">
-            <h2>Quét bằng điện thoại của bạn để tham gia một đơn hàng nhóm</h2>
-            <p>Đơn hàng theo nhóm chỉ có trên ứng dụng. Quét mã QR để tham gia!</p>
+            <p class="title">Quét bằng điện thoại của bạn để tham gia một đơn hàng nhóm</p>
+            <p class="description">Đơn hàng theo nhóm chỉ có trên ứng dụng. Quét mã QR để tham gia!</p>
             <div class="qrCodeView" id="qrCodeView"></div>
             <br>
             <button class="button" id="closeDialogBtn">Đóng</button>
