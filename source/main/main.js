@@ -72,7 +72,7 @@ window.onload = function () {
     if (os === "Android") {
       window.location = androidStoreLink;
     } else if (os === "ios") {
-      window.location = deepLink;
+      window.location = `ktn://app?groupcode=${groupCode}`;
     } else {
       // document.body.innerHTML = "<h1>Unsupported device</h1>";
     }
