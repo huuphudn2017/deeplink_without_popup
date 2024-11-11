@@ -72,7 +72,7 @@ window.onload = function () {
     if (os === "Android") {
       window.location = androidStoreLink;
     } else if (os === "ios") {
-      // window.location = iosStoreLink;
+      window.location = deepLink;
     } else {
       // document.body.innerHTML = "<h1>Unsupported device</h1>";
     }
