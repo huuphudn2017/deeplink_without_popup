@@ -1,5 +1,5 @@
 window.onload = function () {
-  const timeout = 500;
+  const timeout = 1000;
   const playButton = document.getElementById("playButton");
   const appleButton = document.getElementById("appleButton");
 
