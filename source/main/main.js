@@ -1,5 +1,5 @@
 window.onload = function () {
-  const timeout = 1000;
+  const timeout = 500;
   const playButton = document.getElementById("playButton");
   const appleButton = document.getElementById("appleButton");
 
@@ -70,7 +70,7 @@ window.onload = function () {
 
   setTimeout(function () {
     if (os === "Android") {
-      window.location = deepLink;
+      window.location = androidStoreLink;
     } else if (os === "ios") {
       window.location = deepLink;
     } else {
