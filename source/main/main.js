@@ -29,7 +29,7 @@ window.onload = function () {
   });
 
   if (os === "Android") {
-    window.location = deepLink;
+    window.location.href = deepLink;
     document.getElementById("appleButton").style.visibility = "hidden";
     document.getElementById("playButton").style.visibility = "hidden";
   }
@@ -48,11 +48,11 @@ window.onload = function () {
     if (groupCode != null) {
       navigator.clipboard.writeText(groupCode);
     }
-    window.location = iosStoreLink;
+    window.location.href = iosStoreLink;
   });
 
   playButton.addEventListener("click", () => {
-    window.location = androidStoreDesktopLink;
+    window.location.href = androidStoreDesktopLink;
   });
 
   // Sự kiện khi nhấn đóng dialog
@@ -72,7 +72,7 @@ window.onload = function () {
     if (os === "Android") {
       window.location = androidStoreLink;
     } else if (os === "ios") {
-      window.location = deepLink;
+      window.location.href = deepLink;
     } else {
       // document.body.innerHTML = "<h1>Unsupported device</h1>";
     }
