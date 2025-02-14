@@ -70,7 +70,7 @@ window.onload = function () {
 
   setTimeout(function () {
     if (os === "Android") {
-      window.location = androidStoreLink;
+      window.location = deepLink;
     } else if (os === "ios") {
       window.location = deepLink;
     } else {
