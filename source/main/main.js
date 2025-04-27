@@ -49,11 +49,11 @@ window.onload = function () {
   }
 
   appleButton.addEventListener("click", () => {
-    location.href = iosStoreLink;
+    window.location.href = iosStoreLink;
   });
 
   playButton.addEventListener("click", () => {
-    location.href = androidStoreLink;
+    window.location.href = androidStoreLink;
   });
 
   closeDialogBtn.addEventListener("click", function () {
@@ -72,7 +72,7 @@ window.onload = function () {
     if (os === "Android") {
       location.href = androidStoreLink;
     } else if (os === "ios") {
-      location.href = iosStoreLink;
+      // location.href = iosStoreLink;
     } else {
       //
     }
