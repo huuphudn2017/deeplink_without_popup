@@ -1,5 +1,5 @@
 window.onload = function () {
-  // const timeout = 500;
+  const timeout = 500;
 
   const storeContainer = document.getElementById("storeContainer");
   const playButton = document.getElementById("playButton");
@@ -18,8 +18,8 @@ window.onload = function () {
 
   const os = getMobileOperatingSystem();
 
-  const deepLinkAndroid = `intent://grouporder?groupcode=${groupCode}#Intent;scheme=katinat;package=com.sw.katinatkafe;S.browser_fallback_url=${androidStoreLink}end`;
-  const deepLinkIOS = `katinat://grouporder?groupcode=${groupCode}`;
+  const deepLinkIntent = `intent://grouporder?groupcode=${groupCode}#Intent;scheme=katinat;package=com.sw.katinatkafe;S.browser_fallback_url=${androidStoreLink}end`;
+  const deepLink = `katinat://grouporder?groupcode=${groupCode}`;
 
   new QRCode(qrCodeView, {
     text: location.href,
@@ -31,13 +31,13 @@ window.onload = function () {
   });
 
   if (os === "Android") {
-    location.href = deepLinkAndroid;
+    location.href = deepLink;
     storeContainer.style.display = "inline-block";
     playButton.style.display = "inline-block";
   }
 
   if (os === "ios") {
-    location.href = deepLinkIOS;
+    location.href = deepLink;
     storeContainer.style.display = "inline-block";
     appleButton.style.display = "inline-block";
   }
@@ -66,15 +66,15 @@ window.onload = function () {
     location.href = "https://katinat.vn/";
   });
 
-  // setTimeout(function () {
-  //   if (os === "Android") {
-  //     location.href = androidStoreLink;
-  //   } else if (os === "ios") {
-  //     location.href = iosStoreLink;
-  //   } else {
-  //     //
-  //   }
-  // }, timeout);
+  setTimeout(function () {
+    if (os === "Android") {
+      location.href = deepLinkIntent;
+    } else if (os === "ios") {
+      // location.href = iosStoreLink;
+    } else {
+      //
+    }
+  }, timeout);
 };
 
 function getMobileOperatingSystem() {
