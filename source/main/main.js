@@ -1,5 +1,5 @@
 window.onload = function () {
-  const timeout = 500;
+  const timeout = 1000;
 
   const storeContainer = document.getElementById("storeContainer");
   const playButton = document.getElementById("playButton");
@@ -13,7 +13,7 @@ window.onload = function () {
   const urlParams = new URLSearchParams(location.search);
   const groupCode = urlParams.get("groupcode");
 
-  const androidStoreLink = `intent://play.google.com/store/apps/details?id=com.sw.katinatkafe&referrer=utm_groupcode%3D${groupCode}#Intent;scheme=https;package=com.android.vending;end`;
+  const androidStoreLink = `https://play.google.com/store/apps/details?id=com.sw.katinatkafe&referrer=utm_groupcode%3D${groupCode}#Intent;scheme=https;package=com.android.vending;end`;
   const iosStoreLink = `https://apps.apple.com/app/id6462999997`;
 
   const os = getMobileOperatingSystem();
