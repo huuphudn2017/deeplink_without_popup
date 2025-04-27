@@ -1,11 +1,9 @@
 window.onload = function () {
-  const timeout = 500;
+  // const timeout = 500;
 
   const storeContainer = document.getElementById("storeContainer");
   const playButton = document.getElementById("playButton");
   const appleButton = document.getElementById("appleButton");
-
-  // const openDeepLink = document.getElementById("openDeepLink");
 
   const closeDialogBtn = document.getElementById("closeDialogBtn");
   const dialogOverlay = document.getElementById("dialogOverlay");
@@ -49,11 +47,11 @@ window.onload = function () {
   }
 
   appleButton.addEventListener("click", () => {
-    window.location.href = iosStoreLink;
+    location.href = iosStoreLink;
   });
 
   playButton.addEventListener("click", () => {
-    window.location.href = androidStoreLink;
+    location.href = androidStoreLink;
   });
 
   closeDialogBtn.addEventListener("click", function () {
@@ -68,15 +66,15 @@ window.onload = function () {
     location.href = "https://katinat.vn/";
   });
 
-  setTimeout(function () {
-    if (os === "Android") {
-      location.href = androidStoreLink;
-    } else if (os === "ios") {
-      // location.href = iosStoreLink;
-    } else {
-      //
-    }
-  }, timeout);
+  // setTimeout(function () {
+  //   if (os === "Android") {
+  //     location.href = androidStoreLink;
+  //   } else if (os === "ios") {
+  //     location.href = iosStoreLink;
+  //   } else {
+  //     //
+  //   }
+  // }, timeout);
 };
 
 function getMobileOperatingSystem() {
