@@ -5,6 +5,8 @@ window.onload = function () {
   const playButton = document.getElementById("playButton");
   const appleButton = document.getElementById("appleButton");
 
+  const openDeepLink = document.getElementById("openDeepLink");
+
   const closeDialogBtn = document.getElementById("closeDialogBtn");
   const dialogOverlay = document.getElementById("dialogOverlay");
 
@@ -74,6 +76,7 @@ window.onload = function () {
     } else {
       //
     }
+    openDeepLink.click();
   }, timeout);
 };
 
