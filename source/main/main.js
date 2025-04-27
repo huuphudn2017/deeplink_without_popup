@@ -19,7 +19,8 @@ window.onload = function () {
   // const androidStoreDesktopLink = `https://play.google.com/store/search?q=katinat&c=apps`;
   const iosStoreLink = `https://apps.apple.com/app/id6462999997`;
 
-  const deepLink = `katinat://grouporder?groupcode=${groupCode}`;
+  // const deepLink = `katinat://grouporder?groupcode=${groupCode}`;
+  const deepLink = `intent://grouporder?groupcode=${groupCode}#Intent;scheme=katinat;package=com.sw.katinatkafe;end`;
 
   const os = getMobileOperatingSystem();
 
@@ -76,7 +77,7 @@ window.onload = function () {
     } else {
       //
     }
-    openDeepLink.click();
+    // openDeepLink.click();
   }, timeout);
 };
 
