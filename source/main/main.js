@@ -20,9 +20,8 @@ window.onload = function () {
 
   const os = getMobileOperatingSystem();
 
-  const storeLink = os === "Android" ? androidStoreLink : iosStoreLink;
-
-  const deepLink = `intent://grouporder?groupcode=${groupCode}#Intent;scheme=katinat;package=com.sw.katinatkafe;S.browser_fallback_url=${storeLink}end`;
+  const deepLinkAndroid = `intent://grouporder?groupcode=${groupCode}#Intent;scheme=katinat;package=com.sw.katinatkafe;S.browser_fallback_url=${androidStoreLink}end`;
+  const deepLinkIOS = `katinat://grouporder?groupcode=${groupCode}`;
 
   new QRCode(qrCodeView, {
     text: location.href,
@@ -34,15 +33,13 @@ window.onload = function () {
   });
 
   if (os === "Android") {
-    // window.location = deepLink;
-    location.href = deepLink;
+    location.href = deepLinkAndroid;
     storeContainer.style.display = "inline-block";
     playButton.style.display = "inline-block";
   }
 
   if (os === "ios") {
-    // window.location = deepLink;
-    location.href = deepLink;
+    location.href = deepLinkIOS;
     storeContainer.style.display = "inline-block";
     appleButton.style.display = "inline-block";
   }
