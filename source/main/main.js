@@ -1,5 +1,7 @@
 window.onload = function () {
   const timeout = 500;
+
+  const storeContainer = document.getElementById("storeContainer");
   const playButton = document.getElementById("playButton");
   const appleButton = document.getElementById("appleButton");
 
@@ -12,14 +14,14 @@ window.onload = function () {
   const groupCode = urlParams.get("groupcode");
 
   const androidStoreLink = `intent://play.google.com/store/apps/details?id=com.sw.katinatkafe&referrer=utm_groupcode%3D${groupCode}#Intent;scheme=https;package=com.android.vending;end`;
-  const androidStoreDesktopLink = `https://play.google.com/store/search?q=katinat&c=apps`;
+  // const androidStoreDesktopLink = `https://play.google.com/store/search?q=katinat&c=apps`;
   const iosStoreLink = `https://apps.apple.com/app/id6462999997`;
 
-  const deepLink = `katinatdev://app?groupcode=${groupCode}`;
+  const deepLink = `katinat://grouporder?groupcode=${groupCode}`;
 
   const os = getMobileOperatingSystem();
 
-  var qrcode = new QRCode(qrCodeView, {
+  new QRCode(qrCodeView, {
     text: window.location.href,
     width: 200,
     height: 200,
@@ -29,38 +31,34 @@ window.onload = function () {
   });
 
   if (os === "Android") {
-    window.location.href = deepLink;
-    document.getElementById("appleButton").style.visibility = "hidden";
-    document.getElementById("playButton").style.visibility = "hidden";
+    window.location = deepLink;
+    storeContainer.style.display = "inline-block";
+    playButton.style.display = "inline-block";
   }
 
   if (os === "ios") {
-    document.getElementById("playButton").style.visibility = "hidden";
+    window.location = deepLink;
+    storeContainer.style.display = "inline-block";
+    appleButton.style.display = "inline-block";
   }
 
   if (os !== "ios" && os !== "Android") {
-    document.getElementById("appleButton").style.visibility = "hidden";
-    document.getElementById("playButton").style.visibility = "hidden";
     dialogOverlay.style.display = "block";
   }
 
   appleButton.addEventListener("click", () => {
-    if (groupCode != null) {
-      navigator.clipboard.writeText(groupCode);
-    }
-    window.location.href = iosStoreLink;
+    window.location = iosStoreLink;
   });
 
   playButton.addEventListener("click", () => {
-    window.location.href = androidStoreDesktopLink;
+    window.location = androidStoreLink;
   });
 
-  // Sự kiện khi nhấn đóng dialog
   closeDialogBtn.addEventListener("click", function () {
     dialogOverlay.style.display = "none";
     window.location = "https://katinat.vn/";
   });
-  // Đóng dialog khi nhấn ra ngoài khu vực dialog
+
   dialogOverlay.addEventListener("click", function (event) {
     if (event.target === dialogOverlay) {
       dialogOverlay.style.display = "none";
@@ -72,14 +70,13 @@ window.onload = function () {
     if (os === "Android") {
       window.location = androidStoreLink;
     } else if (os === "ios") {
-      window.location.href = deepLink;
+      window.location = iosStoreLink;
     } else {
-      // document.body.innerHTML = "<h1>Unsupported device</h1>";
+      //
     }
   }, timeout);
 };
 
-// Hàm kiểm tra hệ điều hành
 function getMobileOperatingSystem() {
   const userAgent = navigator.userAgent || navigator.vendor || window.opera;
 

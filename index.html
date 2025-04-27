@@ -23,12 +23,15 @@
 </head>
 
 <body>
-    <button id="playButton" class="app-store-button">
-        Đi đến Google Play
-    </button>
-    <button id="appleButton" class="app-store-button">
-        Đi đến App Store
-    </button>
+    <div id="storeContainer" class="download-container">
+        <h2 class="download-heading">Tải ứng dụng KATINAT</h2>
+        <button id="playButton" class="app-store-button google-store-button" >
+            <img src="assets/images/google_play_button_logo.svg" alt="Google Play">
+        </button>
+        <button id="appleButton" class="app-store-button apple-store-button">
+            <img src="assets/images/apple_store_button_logo.svg" alt="App Store">
+        </button>
+    </div>
     <div id="dialogOverlay" class="overlay">
         <div id="dialog" class="dialog">
             <p class="title">Quét bằng điện thoại của bạn để tham gia một đơn hàng nhóm</p>
@@ -38,6 +41,7 @@
             <button class="button" id="closeDialogBtn">Đóng</button>
         </div>
     </div>
+    <a id="openDeepLink" href="intent://grouporder?groupcode=123#Intent;scheme=katinat;package=com.sw.katinatkafe;end">Test</a>
 </body>
 
 </html>

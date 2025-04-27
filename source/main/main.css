@@ -23,24 +23,34 @@
 }
 
 .app-store-button {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #4383c6;
-    color: #fff;
+    padding: 0;
+    background-color: transparent;
     border: none;
-    border-radius: 5px;
     cursor: pointer;
-    text-decoration: none;
-    font-size: 16px;
-    font-weight: bold;
+    margin: 5px;
+    display: none;
+}
+
+.app-store-button img {
+    object-fit: contain;
+}
+
+.apple-store-button img {
+    height: 80px;
+    width: 240px;
+}
+
+.google-store-button img {
+    height: 80px;
+    width: 240px;
+}
+
+.app-store-button:hover {
+    opacity: 0.8;
 }
 
 .qrCodeView {
     display: inline-block;
-}
-
-.app-store-button:hover {
-    background-color: #1f5185;
 }
 
 /* Căn chỉnh overlay bao phủ toàn bộ màn hình */
@@ -98,4 +108,29 @@
     -webkit-transition: all 0.25s;
     box-shadow: none;
     transform: scale(0.98);
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: katinatBody;
+    /* background-color: #000; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.download-container {
+    text-align: center;
+    display: none;
+    padding: 20px;
+}
+
+.download-heading {
+    font-family: katinat;
+    color: #000;
+    margin-bottom: 10px;
+    font-size: 28px;
+    font-weight: normal;
 }
