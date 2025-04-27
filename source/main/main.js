@@ -1,5 +1,5 @@
 window.onload = function () {
-  const timeout = 1000;
+  const timeout = 500;
 
   const storeContainer = document.getElementById("storeContainer");
   const playButton = document.getElementById("playButton");
@@ -18,7 +18,8 @@ window.onload = function () {
 
   const os = getMobileOperatingSystem();
 
-  const deepLinkIntent = `intent://grouporder?groupcode=${groupCode}#Intent;scheme=katinat;package=com.sw.katinatkafe;S.browser_fallback_url=${androidStoreLink}end`;
+  // const deepLinkIntent = `intent://grouporder?groupcode=${groupCode}#Intent;scheme=katinat;package=com.sw.katinatkafe;S.browser_fallback_url=${androidStoreLink}end`;
+  const deepLinkIntent = `intent://grouporder?groupcode=${groupCode}#Intent;scheme=katinat;package=com.sw.katinatkafe;end`;
   const deepLink = `katinat://grouporder?groupcode=${groupCode}`;
 
   new QRCode(qrCodeView, {
@@ -36,13 +37,13 @@ window.onload = function () {
     playButton.style.display = "inline-block";
   }
 
-  if (os === "ios") {
+  if (os === "IOS") {
     location.href = deepLink;
     storeContainer.style.display = "inline-block";
     appleButton.style.display = "inline-block";
   }
 
-  if (os !== "ios" && os !== "Android") {
+  if (os !== "IOS" && os !== "Android") {
     dialogOverlay.style.display = "block";
   }
 
@@ -69,7 +70,7 @@ window.onload = function () {
   setTimeout(function () {
     if (os === "Android") {
       location.href = deepLinkIntent;
-    } else if (os === "ios") {
+    } else if (os === "IOS") {
       // location.href = iosStoreLink;
     } else {
       //
@@ -85,7 +86,7 @@ function getMobileOperatingSystem() {
   }
 
   if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-    return "ios";
+    return "IOS";
   }
 
   return "unknown";

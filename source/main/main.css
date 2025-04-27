@@ -36,13 +36,13 @@
 }
 
 .apple-store-button img {
-    height: 80px;
-    width: 240px;
+    height: 60px;
+    width: 180px;
 }
 
 .google-store-button img {
-    height: 80px;
-    width: 240px;
+    height: 60px;
+    width: 180px;
 }
 
 .app-store-button:hover {
