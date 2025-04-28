@@ -1,4 +1,6 @@
 window.onload = function () {
+  document.querySelector('meta[property="og:url"]').content = location.href;
+
   const timeout = 500;
 
   const storeContainer = document.getElementById("storeContainer");
