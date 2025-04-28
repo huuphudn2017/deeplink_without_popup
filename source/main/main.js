@@ -1,28 +1,27 @@
 window.onload = function () {
-  document.querySelector('meta[property="og:url"]').content = location.href;
-
-  const timeout = 500;
-
+  // Initialize elements
   const storeContainer = document.getElementById("storeContainer");
   const playButton = document.getElementById("playButton");
   const appleButton = document.getElementById("appleButton");
-
   const closeDialogBtn = document.getElementById("closeDialogBtn");
   const dialogOverlay = document.getElementById("dialogOverlay");
-
   const qrCodeView = document.getElementById("qrCodeView");
+  document.querySelector('meta[property="og:url"]').content = location.href;
 
+  const timeout = 500;
   const urlParams = new URLSearchParams(location.search);
   const groupCode = urlParams.get("groupcode");
-
-  const androidStoreLink = `https://play.google.com/store/apps/details?id=com.sw.katinatkafe&referrer=utm_groupcode%3D${groupCode}#Intent;scheme=https;package=com.android.vending;end`;
+  const homeURL = "https://katinat.vn/";
+  const packageName = "com.sw.katinatkafe";
+  const scheme = "katinat";
+  const host = "grouporder";
+  const params = `groupcode=${groupCode}`;
+  const androidStoreLink = `https://play.google.com/store/apps/details?id=${packageName}&referrer=utm_groupcode%3D${groupCode}#Intent;scheme=https;package=com.android.vending;end`;
   const iosStoreLink = `https://apps.apple.com/app/id6462999997`;
-
+  // const deepLinkIntent = `intent://${host}?${params}#Intent;scheme=${scheme};package=${packageName};S.browser_fallback_url=${androidStoreLink}end`;
+  const deepLinkIntent = `intent://${host}?${params}#Intent;scheme=${scheme};package=${packageName};end`;
+  const deepLink = `${scheme}://${host}?${params}`;
   const os = getMobileOperatingSystem();
-
-  // const deepLinkIntent = `intent://grouporder?groupcode=${groupCode}#Intent;scheme=katinat;package=com.sw.katinatkafe;S.browser_fallback_url=${androidStoreLink}end`;
-  const deepLinkIntent = `intent://grouporder?groupcode=${groupCode}#Intent;scheme=katinat;package=com.sw.katinatkafe;end`;
-  const deepLink = `katinat://grouporder?groupcode=${groupCode}`;
 
   new QRCode(qrCodeView, {
     text: location.href,
@@ -59,14 +58,14 @@ window.onload = function () {
 
   closeDialogBtn.addEventListener("click", function () {
     dialogOverlay.style.display = "none";
-    location.href = "https://katinat.vn/";
+    location.href = homeURL;
   });
 
   dialogOverlay.addEventListener("click", function (event) {
     if (event.target === dialogOverlay) {
       dialogOverlay.style.display = "none";
     }
-    location.href = "https://katinat.vn/";
+    location.href = homeURL;
   });
 
   setTimeout(function () {
