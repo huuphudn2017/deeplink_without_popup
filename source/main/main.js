@@ -12,11 +12,12 @@ window.onload = function () {
   const urlParams = new URLSearchParams(location.search);
   const groupCode = urlParams.get("groupcode");
   const homeURL = "https://katinat.vn/";
+  const packageNameLive = "com.sw.katinatkafe";
   const packageName = "com.sw.katinatkafe";
   const scheme = "katinat";
   const host = "grouporder";
   const params = `groupcode=${groupCode}`;
-  const androidStoreLink = `https://play.google.com/store/apps/details?id=${packageName}&referrer=utm_groupcode%3D${groupCode}#Intent;scheme=https;package=com.android.vending;end`;
+  const androidStoreLink = `https://play.google.com/store/apps/details?id=${packageNameLive}&referrer=utm_groupcode%3D${groupCode}#Intent;scheme=https;package=com.android.vending;end`;
   const iosStoreLink = `https://apps.apple.com/app/id6462999997`;
   // const deepLinkIntent = `intent://${host}?${params}#Intent;scheme=${scheme};package=${packageName};S.browser_fallback_url=${androidStoreLink}end`;
   const deepLinkIntent = `intent://${host}?${params}#Intent;scheme=${scheme};package=${packageName};end`;
